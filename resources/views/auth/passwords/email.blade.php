@@ -12,10 +12,11 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href="index" class="d-inline-block auth-logo">
-                                    <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="" height="20">
+{{--                                    <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="" height="20">--}}
+                                    <h1>{{ config('app.name') }}</h1>
                                 </a>
                             </div>
-                            <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+{{--                            <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>--}}
                         </div>
                     </div>
                 </div>
@@ -28,7 +29,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Forgot Password?</h5>
-                                    <p class="text-muted">Reset password with velzon</p>
+                                    <p class="text-muted">Reset password with {{ config('app.name') }}</p>
 
                                     <lord-icon src="https://cdn.lordicon.com/rhvddzym.json" trigger="loop"
                                         colors="primary:#8c68cd" class="avatar-xl">
@@ -51,7 +52,7 @@
                                             <label for="useremail" class="form-label">Email</label>
                                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                                 id="useremail" name="email" placeholder="Enter email"
-                                                value="{{ old('email') }}" id="email">
+                                                value="{{ old('email') }}" id="email" required>
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -92,7 +93,7 @@
                         <div class="text-center">
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by
+                            </script> {{ config('app.name') }}. Crafted with <i class="mdi mdi-heart text-danger"></i> by
                             Themesbrand</p>
                         </div>
                     </div>
