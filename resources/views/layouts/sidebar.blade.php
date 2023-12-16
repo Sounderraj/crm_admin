@@ -29,15 +29,27 @@
 
     <div id="scrollbar">
         <div class="container-fluid">
-
+<?php
+     $userId = auth()->user()->id;
+     $roleId = DB::table('role_user')->where('user_id',$userId)->pluck('role_id')->first();
+     $rolePermission = DB::table('role_has_permissions')->where('role_id',$roleId)->pluck('permission_id')->all();
+     $permissionList = DB::table('permissions')->whereIn('id',$rolePermission)->pluck('name')->all();
+?>
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
 {{--                <li class="menu-title"><span>@lang('translation.menu')</span></li>--}}
                 <li class="nav-item">
+                    @if(in_array('dashboard', $permissionList))
                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.dashboards')</span>
                     </a>
+                    @endif
+                    @if(in_array('admin-dashboard', $permissionList))
+                    <a class="nav-link menu-link" href="" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                        <i class="ri-dashboard-2-line"></i> <span>Admin Dashboard</span>
+                    </a>
+                    @endif
 {{--                    <div class="collapse menu-dropdown" id="sidebarDashboards">--}}
 {{--                        <ul class="nav nav-sm flex-column">--}}
 {{--                            <li class="nav-item">--}}
@@ -548,9 +560,11 @@
 {{--                </li>--}}
 
                 <li class="nav-item">
+                    @if(in_array('user_management', $permissionList))
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
                         <i class="ri-pages-line"></i> <span>User Management</span>
                     </a>
+                    @endif
                     <div class="collapse menu-dropdown" id="sidebarPages">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">

@@ -12,14 +12,13 @@
     <div class="container">
         <h2>Permission List</h2>
 
-        <a href="{{ route('permissions.create') }}" class="btn btn-primary">Create Permission</a>
+        <a href="{{ route('permissions.create') }}" style="float:right;" class="btn btn-success">Create Permission</a>
 
         <table class="table mt-3">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Guard Name</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -28,10 +27,11 @@
                 <tr>
                     <td>{{ $permission->id }}</td>
                     <td>{{ $permission->name }}</td>
-                    <td>{{ $permission->guard_name }}</td>
                     <td>
                         <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                        {{-- You can add a delete button if needed --}}
+                        {!! Form::open(['method' => 'DELETE', 'route' => ['permissions.destroy', $permission->id], 'style' => 'display:inline']) !!}
+                        {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("Are you sure you want to delete?")']) !!}
+                        {!! Form::close() !!}
                     </td>
                 </tr>
             @empty

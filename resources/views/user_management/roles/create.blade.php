@@ -14,7 +14,7 @@
                 <h2>Create New Role</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+                <a class="btn btn-primary" style="float: right" href="{{ route('roles.index') }}"> Back</a>
             </div>
         </div>
     </div>
@@ -33,26 +33,25 @@
 
 
     {!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Name:</strong>
+                    {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 mt-3">
-            <div class="input-group">
-                <strong>Permission:</strong>
-                <br/>
-                @foreach($permission as $value)
-                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
-                        {{ $value->name }}</label>
+            <div class="col-xs-12 col-sm-12 col-md-12 mt-3">
+                <div class="input-group">
+                    <strong>Permission:</strong>
                     <br/>
-                @endforeach
+                    {!! Form::select('permission[]', $permission,[], array('class' => 'form-control select2', 'id' => 'permSelect' ,'multiple')) !!}
+
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
         </div>
     </div>
     {!! Form::close() !!}
@@ -63,4 +62,9 @@
     <script src="{{ URL::asset('build/js/pages/timeline.init.js') }}"></script>
 
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
+    <script>
+        $(function () {
+            $("#permSelect").select2();
+        })
+    </script>
 @endsection

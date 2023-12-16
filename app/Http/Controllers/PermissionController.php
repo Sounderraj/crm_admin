@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
@@ -47,5 +48,10 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')->with('success', 'Permission updated successfully');
     }
 
-    // You can add more methods as needed
+    public function destroy($id)
+    {
+        Permission::where('id',$id)->delete();
+        return redirect()->route('permissions.index')
+            ->with('success','Permission deleted successfully');
+    }
 }
