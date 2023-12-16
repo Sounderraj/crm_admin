@@ -21,13 +21,17 @@
     @can('role-create')
         <a class="btn btn-success" style="float: right" href="{{ route('roles.create') }}"> Create New Role</a>
     @endcan
-    <table class="table mt-3">
-        <tr>
+    <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle mt-3" style="width:100%">
+        <thead>
+            <tr>
+
             <th>No</th>
             <th>Name</th>
             <th>Action</th>
         </tr>
-        @foreach ($roles as $key => $role)
+        </thead>
+        <tbody>
+            @foreach ($roles as $key => $role)
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $role->name }}</td>
@@ -44,6 +48,7 @@
                 </td>
             </tr>
         @endforeach
+        </tbody>
     </table>
 </div>
 

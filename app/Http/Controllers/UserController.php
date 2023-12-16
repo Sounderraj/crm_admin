@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,9 +20,13 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::user()->can('user-list')) {
         $data = User::orderBy('id','DESC')->paginate(5);
         return view('user_management.users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
+        }else{
+            return view('auth-404-basic');
+        }
     }
 
     /**

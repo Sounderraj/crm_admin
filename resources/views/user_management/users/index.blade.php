@@ -18,20 +18,22 @@
     <div class="container">
         <h2>Users List</h2>
 
-        <div class="">
+            @can('user-create')
             <a href="{{ route('users.create') }}" style="float: right" class="btn btn-success">Create New User</a>
-        </div>
-        <br>
+            @endcan
 
-        <table class="table mt-3">
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th width="280px">Action</th>
-            </tr>
-            @foreach ($data as $key => $user)
+        <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle mt-3" style="width:100%">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th width="280px">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $key => $user)
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $user->name }}</td>
@@ -44,20 +46,24 @@
                         @endif
                     </td>
                     <td>
-                        <a class="btn btn-sm btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-                        <a class="btn btn-sm btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                        {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'style' => 'display:inline']) !!}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("Are you sure you want to delete?")']) !!}
-                        {!! Form::close() !!}
+                        @can('user-show')
+                            <a class="btn btn-sm btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
+                        @endcan
+                        @can('user-edit')
+                            <a class="btn btn-sm btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                        @endcan
+                        @can('user-delete')
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'style' => 'display:inline']) !!}
+                            {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("Are you sure you want to delete?")']) !!}
+                            {!! Form::close() !!}
+                        @endcan
                     </td>
                 </tr>
             @endforeach
+            </tbody>
         </table>
     </div>
 
-
-
-    {!! $data->render() !!}
 
 @endsection
 @section('script')

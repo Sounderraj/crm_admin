@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
@@ -24,9 +25,13 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('user_management.roles.index',compact('roles'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        if (Auth::user()->can('role-list')) {
+            $roles = Role::orderBy('id', 'DESC')->paginate(5);
+            return view('user_management.roles.index', compact('roles'))
+                ->with('i', ($request->input('page', 1) - 1) * 5);
+        }else {
+            return view('auth-404-basic');
+        }
     }
 
     /**

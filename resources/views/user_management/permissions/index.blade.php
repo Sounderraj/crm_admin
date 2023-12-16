@@ -9,12 +9,20 @@
         @slot('title') Permissions @endslot
     @endcomponent
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+
     <div class="container">
         <h2>Permission List</h2>
 
+        @can('permission-create')
         <a href="{{ route('permissions.create') }}" style="float:right;" class="btn btn-success">Create Permission</a>
+        @endcan
 
-        <table class="table mt-3">
+        <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle mt-3" style="width:100%">
             <thead>
             <tr>
                 <th>ID</th>
@@ -28,10 +36,14 @@
                     <td>{{ $permission->id }}</td>
                     <td>{{ $permission->name }}</td>
                     <td>
+                        @can('permission-edit')
                         <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        @endcan
+                        @can('permission-delete')
                         {!! Form::open(['method' => 'DELETE', 'route' => ['permissions.destroy', $permission->id], 'style' => 'display:inline']) !!}
                         {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("Are you sure you want to delete?")']) !!}
                         {!! Form::close() !!}
+                        @endcan
                     </td>
                 </tr>
             @empty

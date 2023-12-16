@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
@@ -10,8 +11,12 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        $permissions = Permission::all();
-        return view('user_management.permissions.index', compact('permissions'));
+        if (Auth::user()->can('permission-list')) {
+            $permissions = Permission::all();
+            return view('user_management.permissions.index', compact('permissions'));
+        }else{
+            return view('auth-404-basic');
+        }
     }
 
     public function create()
