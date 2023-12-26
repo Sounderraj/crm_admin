@@ -15,12 +15,12 @@
     </div>
 @endif
 
-<div class="container">
-    <h2>Role List</h2>
-
     @can('role-create')
         <a class="btn btn-success" style="float: right" href="{{ route('roles.create') }}"> Create New Role</a>
     @endcan
+<div class="container">
+    <h2>Role List</h2>
+
     <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle mt-3" style="width:100%">
         <thead>
             <tr>

@@ -15,12 +15,11 @@
         </div>
     @endif
 
+    @can('permission-create')
+        <a href="{{ route('permissions.create') }}" style="float:right;" class="btn btn-success">Create Permission</a>
+    @endcan
     <div class="container">
         <h2>Permission List</h2>
-
-        @can('permission-create')
-        <a href="{{ route('permissions.create') }}" style="float:right;" class="btn btn-success">Create Permission</a>
-        @endcan
 
         <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle mt-3" style="width:100%">
             <thead>

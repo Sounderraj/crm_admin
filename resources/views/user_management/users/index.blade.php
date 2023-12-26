@@ -15,12 +15,12 @@
         </div>
     @endif
 
+    @can('user-create')
+        <a href="{{ route('users.create') }}" style="float: right" class="btn btn-success">Create New User</a>
+    @endcan
+
     <div class="container">
         <h2>Users List</h2>
-
-            @can('user-create')
-            <a href="{{ route('users.create') }}" style="float: right" class="btn btn-success">Create New User</a>
-            @endcan
 
         <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle mt-3" style="width:100%">
             <thead>

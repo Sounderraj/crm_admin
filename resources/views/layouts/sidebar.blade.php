@@ -46,10 +46,19 @@
                     </a>
                     @endcan
                     @can('admin-dashboard')
-                    <a class="nav-link menu-link" href="" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span>Admin Dashboard</span>
                     </a>
                     @endcan
+                </li>
+
+                <li class="nav-item">
+                    @can('customer')
+                    <a class="nav-link menu-link" href="{{ route('customer.index') }}">
+                        <i class="ri-honour-line"></i> <span>Customer</span>
+                    </a>
+                    @endcan
+                </li>
 {{--                    <div class="collapse menu-dropdown" id="sidebarDashboards">--}}
 {{--                        <ul class="nav nav-sm flex-column">--}}
 {{--                            <li class="nav-item">--}}
@@ -75,7 +84,7 @@
 {{--                            </li>--}}
 {{--                        </ul>--}}
 {{--                    </div>--}}
-                </li> <!-- end Dashboard Menu -->
+{{--                </li> <!-- end Dashboard Menu -->--}}
 
 
 {{--                <li class="nav-item">--}}
@@ -561,25 +570,26 @@
 
                 <li class="nav-item">
                     @can('user-management')
-                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
+                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarPages">
                         <i class="ri-pages-line"></i> <span>User Management</span>
                     </a>
                     @endcan
-                    <div class="collapse menu-dropdown" id="sidebarPages">
+                    <div class="collapse menu-dropdown {{ request()->is('user_management/*') ? 'show' : '' }}" id="sidebarPages">
                         <ul class="nav nav-sm flex-column">
                             @can('user-list')
                             <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">Users</a>
+                                <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('user_management/users') || request()->is('user_management/users/*') ? 'active' : '' }}">Users</a>
                             </li>
                             @endcan
                             @can('role-list')
                             <li class="nav-item">
-                                <a href="{{ route('roles.index') }}" class="nav-link">Roles</a>
+                                <a href="{{ route('roles.index') }}" class="nav-link {{ request()->is('user_management/roles') || request()->is('user_management/roles/*') ? 'active' : '' }}">Roles</a>
                             </li>
                                 @endcan
                             @can('permission-list')
                             <li class="nav-item">
-                                <a href="{{ route('permissions.index') }}" class="nav-link">Permissions</a>
+                                <a href="{{ route('permissions.index') }}" class="nav-link {{ request()->is('user_management/permissions') || request()->is('user_management/permissions/*') ? 'active' : '' }}">Permissions</a>
                             </li>
                             @endcan
                         </ul>

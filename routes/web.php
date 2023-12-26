@@ -20,9 +20,16 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', \App\Http\Controllers\RoleController::class);
-    Route::resource('users', \App\Http\Controllers\UserController::class);
-    Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
+
+    Route::group(['prefix' => 'user_management'], function () {
+        Route::resource('roles', \App\Http\Controllers\RoleController::class);
+        Route::resource('users', \App\Http\Controllers\UserController::class);
+        Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
+    });
+
+    Route::group(['prefix' => 'masters'], function (){
+        Route::resource('customer', \App\Http\Controllers\CustomerController::class);
+    });
 });
 
 //Update User Details
