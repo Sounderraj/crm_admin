@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Arr;
+use App\Models\Estimate;
 
 
-class CustomerController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if (Auth::user()->can('customer-list')) {
-            $data = Customer::orderBy('id','DESC')->paginate(5);
-            return view('customer.index',compact('data'))
+        if (Auth::user()->can('invoice-list')) {
+            // $data = Estimate::orderBy('id','DESC')->paginate(5);
+            $data = [];
+            return view('invoice.index',compact('data'))
                 ->with('i', ($request->input('page', 1) - 1) * 5);
         }else{
             return view('auth-404-basic');
@@ -34,7 +30,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create');
+        return view('invoice.create');
     }
 
     /**
@@ -44,12 +40,11 @@ class CustomerController extends Controller
     {
         $params = $request->all();
 
-        $params['phone'] = '+91-'.$params['phone'];
         unset($params['_token']);
 
-        Customer::create($params);
+        Estimate::create($params);
 
-        return redirect()->route('customer.index')->with('success','Customer created successfully');
+        return redirect()->route('invoice.index')->with('success','Estimate created successfully');
     }
 
     /**
@@ -57,8 +52,8 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        $user = Customer::find($id);
-        return view('customer.show',compact('user'));
+        $user = Estimate::find($id);
+        return view('invoice.show',compact('user'));
     }
 
     /**
@@ -66,9 +61,9 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        $user = Customer::find($id);
+        $user = Estimate::find($id);
 
-        return view('customer.edit',compact('user'));
+        return view('invoice.edit',compact('user'));
     }
 
     /**
@@ -78,7 +73,7 @@ class CustomerController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:customers,email,'.$id,
+            'email' => 'required|email|unique:invoices,email,'.$id,
             'company_name' => 'required',
             'phone' => 'required',
             'address' => 'required',
@@ -86,11 +81,11 @@ class CustomerController extends Controller
 
         $input = $request->all();
 
-        $user = Customer::find($id);
+        $user = Estimate::find($id);
         $user->update($input);
 
-        return redirect()->route('customer.index')
-                    ->with('success','Customer details updated successfully');
+        return redirect()->route('invoice.index')
+                    ->with('success','Estimate details updated successfully');
     }
 
     /**
@@ -99,9 +94,9 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
 
-        Customer::find($id)->delete();
+        Estimate::find($id)->delete();
 
-        return redirect()->route('customer.index')
-                    ->with('success','Customer deleted successfully');
+        return redirect()->route('invoice.index')
+                    ->with('success','Estimate deleted successfully');
     }
 }

@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 @component('components.breadcrumb')
-    @slot('li_1') <a href="{{ route('customer.index') }}">Customers</a> @endslot
+    @slot('li_1') <a href="{{ route('estimate.index') }}">Products</a> @endslot
     @slot('title') Show @endslot
 @endcomponent
 
@@ -24,7 +24,7 @@
 
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Show Customer</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Show Product</h4>
                 <!-- <div class="flex-shrink-0">
                     <div class="form-check form-switch form-switch-right form-switch-md">
                         <label for="FormSelectDefault" class="form-label text-muted">Show Code</label>
@@ -37,24 +37,32 @@
                     <div class="row p-3">
                         <table class="table table-striped table-bordered" style="font-size: 15px">
                             <tr>
-                                <td><strong>Name</strong></td>
-                                <td>{{ $user->name }}</td>
+                            <td><strong>Quote Date</strong></td>
+                                <td>{{ $estimate->quote_date }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Company Name</strong></td>
-                                <td>{{ $user->company_name }}</td>
+                                <td><strong>Customer Name</strong></td>
+                                <td>{{ $estimate->customer->company_name }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Email</strong></td>
-                                <td>{{ $user->email }}</td>
+                                <td><strong>Subject</strong></td>
+                                <td>{{ $estimate->subject_name }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Phone</strong></td>
-                                <td>{{ $user->phone }}</td>
+                                <td><strong>Estimate number</strong></td>
+                                <td>{{ $estimate->estimate_number }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Address</strong></td>
-                                <td>{{ $user->address }}</td>
+                                <td><strong>Reference number</strong></td>
+                                <td>{{ $estimate->reference_number}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Product Rate</strong></td>
+                                <td>{{ $estimate->rate }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td>{{ $estimate->status }}</td>
                             </tr>
                         </table>
                     </div>

@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 @component('components.breadcrumb')
-    @slot('li_1') <a href="{{ route('customer.index') }}">Customers</a> @endslot
+    @slot('li_1') <a href="{{ route('leads.index') }}">Leadss</a> @endslot
     @slot('title') Show @endslot
 @endcomponent
 
@@ -24,7 +24,7 @@
 
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Show Customer</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Show Leads</h4>
                 <!-- <div class="flex-shrink-0">
                     <div class="form-check form-switch form-switch-right form-switch-md">
                         <label for="FormSelectDefault" class="form-label text-muted">Show Code</label>
@@ -37,24 +37,40 @@
                     <div class="row p-3">
                         <table class="table table-striped table-bordered" style="font-size: 15px">
                             <tr>
-                                <td><strong>Name</strong></td>
-                                <td>{{ $user->name }}</td>
+                            <td><strong>Name</strong></td>
+                                <td>{{ $leads->name }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Company Name</strong></td>
-                                <td>{{ $user->company_name }}</td>
+                                <td><strong>Title</strong></td>
+                                <td>{{ $leads->title }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Email</strong></td>
-                                <td>{{ $user->email }}</td>
+                                <td><strong>Customer Name</strong></td>
+                                <td>{{ $leads->company_name }}</td>
                             </tr>
                             <tr>
                                 <td><strong>Phone</strong></td>
-                                <td>{{ $user->phone }}</td>
+                                <td>{{ $leads->phone }}</td>
                             </tr>
                             <tr>
-                                <td><strong>Address</strong></td>
-                                <td>{{ $user->address }}</td>
+                                <td><strong>Leads Owner</strong></td>
+                                <td>{{ $leads->leads_owner}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Leads Status</strong></td>
+                                <td>{{ $leads->leads_status }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Leads Score</strong></td>
+                                <td>{{ $leads->leads_score }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Created At</strong></td>
+                                <td>{{ $leads->created_at }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Updated At</strong></td>
+                                <td>{{ $leads->updated_at }}</td>
                             </tr>
                         </table>
                     </div>

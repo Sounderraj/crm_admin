@@ -21,9 +21,9 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->can('user-list')) {
-        $data = User::orderBy('id','DESC')->paginate(5);
-        return view('user_management.users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+            $data = User::orderBy('id','DESC')->paginate(5);
+            return view('user_management.users.index',compact('data'))
+                ->with('i', ($request->input('page', 1) - 1) * 5);
         }else{
             return view('auth-404-basic');
         }

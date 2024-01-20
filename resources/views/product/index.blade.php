@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1') <a href="{{ route('customer.index') }}">Customers</a> @endslot
+        @slot('li_1') <a href="{{ route('product.index') }}">Products</a> @endslot
         @slot('title') List @endslot
     @endcomponent
 
@@ -22,11 +22,11 @@
 
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Customers</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Products</h4>
                     <div class="flex-shrink-0">
                         <div class="form-check form-switch form-switch-right form-switch-md">
-                            @can('customer-create')
-                                <a href="{{ route('customer.create') }}" >
+                            @can('product-create')
+                                <a href="{{ route('product.create') }}" >
                                 <button type="button" class="btn btn-md btn-primary">
                                     <i class="ri-add-line align-middle me-1"></i>Create
                                 </button>
@@ -41,31 +41,31 @@
                             <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle mt-3" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th>Name</th>
-                                    <th>Company Name</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
+                                    <th>SKU Number</th>
+                                    <th>Rate (Rs)</th>
+                                    <th>Quantity</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $key => $user)
+                                    @foreach ($data as $key => $product)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->company_name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->sku_number }}</td>
+                                        <td>{{ $product->rate }}</td>
+                                        <td>{{ $product->quantity .' '. $product->unit }}</td>
                                         <td>
-                                            @can('customer-show')
-                                                <a class="btn btn-sm btn-info" href="{{ route('customer.show',$user->id) }}">Show</a>
+                                            @can('product-show')
+                                                <a class="btn btn-sm btn-info" href="{{ route('product.show',$product->id) }}">Show</a>
                                             @endcan
-                                            @can('customer-edit')
-                                                <a class="btn btn-sm btn-primary" href="{{ route('customer.edit',$user->id) }}">Edit</a>
+                                            @can('product-edit')
+                                                <a class="btn btn-sm btn-primary" href="{{ route('product.edit',$product->id) }}">Edit</a>
                                             @endcan
-                                            @can('customer-delete')
-                                                {!! Form::open(['method' => 'DELETE', 'route' => ['customer.destroy', $user->id], 'style' => 'display:inline']) !!}
+                                            @can('product-delete')
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['product.destroy', $product->id], 'style' => 'display:inline']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("Are you sure you want to delete?")']) !!}
                                                 {!! Form::close() !!}
                                             @endcan

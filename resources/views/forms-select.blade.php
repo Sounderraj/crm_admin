@@ -49,29 +49,29 @@
                     </div>
 
 
-<div class="d-none code-view">
-<pre class="language-markup">
-<code> &lt;select class=&quot;form-select mb-3&quot; aria-label=&quot;Default select example&quot;&gt;
-&lt;option selected&gt;Open this select menu&lt;/option&gt;
-&lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
-&lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
-&lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
-&lt;/select&gt;</code>
+                    <div class="d-none code-view">
+                    <pre class="language-markup">
+                    <code> &lt;select class=&quot;form-select mb-3&quot; aria-label=&quot;Default select example&quot;&gt;
+                    &lt;option selected&gt;Open this select menu&lt;/option&gt;
+                    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+                    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+                    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+                    &lt;/select&gt;</code>
 
-<code> &lt;select class=&quot;form-select rounded-pill mb-3&quot; aria-label=&quot;Default select example&quot;&gt;
-&lt;option selected&gt;Search for services&lt;/option&gt;
-&lt;option value=&quot;1&quot;&gt;Information Architecture&lt;/option&gt;
-&lt;option value=&quot;2&quot;&gt;UI/UX Design&lt;/option&gt;
-&lt;option value=&quot;3&quot;&gt;Back End Development&lt;/option&gt;
-&lt;/select&gt;</code>
+                    <code> &lt;select class=&quot;form-select rounded-pill mb-3&quot; aria-label=&quot;Default select example&quot;&gt;
+                    &lt;option selected&gt;Search for services&lt;/option&gt;
+                    &lt;option value=&quot;1&quot;&gt;Information Architecture&lt;/option&gt;
+                    &lt;option value=&quot;2&quot;&gt;UI/UX Design&lt;/option&gt;
+                    &lt;option value=&quot;3&quot;&gt;Back End Development&lt;/option&gt;
+                    &lt;/select&gt;</code>
 
-<code>&lt;select class=&quot;form-select&quot; aria-label=&quot;Disabled select example&quot; disabled&gt;
-&lt;option selected&gt;Open this select menu (Disabled)&lt;/option&gt;
-&lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
-&lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
-&lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
-&lt;/select&gt;</code></pre>
-</div>
+                    <code>&lt;select class=&quot;form-select&quot; aria-label=&quot;Disabled select example&quot; disabled&gt;
+                    &lt;option selected&gt;Open this select menu (Disabled)&lt;/option&gt;
+                    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+                    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+                    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+                    &lt;/select&gt;</code></pre>
+                    </div>
 
                 </div>
             </div>

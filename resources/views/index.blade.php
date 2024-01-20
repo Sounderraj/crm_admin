@@ -9,7 +9,7 @@
 @section('content')
 
 
-    HIIIIIIII
+    Welcome to CRM Dashboard!!
 {{--    @component('components.breadcrumb')--}}
 {{--        @slot('li_1')--}}
 {{--            Dashboard--}}

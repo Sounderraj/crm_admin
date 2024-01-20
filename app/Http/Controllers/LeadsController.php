@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
+// use App\Models\Customer;
+use App\Models\Leads;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Arr;
 
 
-class CustomerController extends Controller
+class LeadsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if (Auth::user()->can('customer-list')) {
-            $data = Customer::orderBy('id','DESC')->paginate(5);
-            return view('customer.index',compact('data'))
+        if (Auth::user()->can('leads-list')) {
+            $data = Leads::orderBy('id','DESC')->paginate(5);
+            return view('leads.index',compact('data'))
                 ->with('i', ($request->input('page', 1) - 1) * 5);
         }else{
             return view('auth-404-basic');
@@ -34,7 +31,11 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create');
+        // Fetch all customers
+        $customers = Customer::all();
+        $statusValues = Leads::getLeadStatusEnumValues();
+
+        return view('leads.create', compact('customers','statusValues'));
     }
 
     /**
@@ -44,12 +45,11 @@ class CustomerController extends Controller
     {
         $params = $request->all();
 
-        $params['phone'] = '+91-'.$params['phone'];
         unset($params['_token']);
 
-        Customer::create($params);
+        Leads::create($params);
 
-        return redirect()->route('customer.index')->with('success','Customer created successfully');
+        return redirect()->route('leads.index')->with('success','Estimate created successfully');
     }
 
     /**
@@ -57,8 +57,8 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        $user = Customer::find($id);
-        return view('customer.show',compact('user'));
+        $leads = Leads::find($id);
+        return view('leads.show',compact('leads'));
     }
 
     /**
@@ -66,9 +66,11 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        $user = Customer::find($id);
+        $leads = Leads::find($id);
+        $customers = Customer::all();
+        $statusValues = Leads::getLeadStatusEnumValues();
 
-        return view('customer.edit',compact('user'));
+        return view('leads.edit',compact('leads','customers','statusValues'));
     }
 
     /**
@@ -76,21 +78,25 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:customers,email,'.$id,
+            'title' => 'required',
             'company_name' => 'required',
             'phone' => 'required',
-            'address' => 'required',
+            'location' => '',
+            'leads_owner' => 'required',
+            'leads_status' => 'required',
+            'leads_score' => 'required',
         ]);
 
         $input = $request->all();
 
-        $user = Customer::find($id);
+        $user = Leads::find($id);
         $user->update($input);
 
-        return redirect()->route('customer.index')
-                    ->with('success','Customer details updated successfully');
+        return redirect()->route('leads.index')
+                    ->with('success','Estimate details updated successfully');
     }
 
     /**
@@ -99,9 +105,10 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
 
-        Customer::find($id)->delete();
+        Leads::find($id)->delete();
 
-        return redirect()->route('customer.index')
-                    ->with('success','Customer deleted successfully');
+        return redirect()->route('leads.index')
+                    ->with('success','Estimate deleted successfully');
     }
+
 }

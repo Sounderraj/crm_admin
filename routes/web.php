@@ -30,6 +30,23 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['prefix' => 'masters'], function (){
         Route::resource('customer', \App\Http\Controllers\CustomerController::class);
     });
+
+    Route::group(['prefix' => 'product_management'], function (){
+        Route::resource('product', \App\Http\Controllers\ProductController::class);
+    });
+
+    Route::group(['prefix' => ''], function (){
+        Route::resource('leads', \App\Http\Controllers\LeadsController::class);
+    });
+
+    Route::group(['prefix' => 'sale_management'], function (){
+        Route::resource('estimate', \App\Http\Controllers\EstimateController::class);
+        Route::resource('invoice', \App\Http\Controllers\InvoiceController::class);
+    });
+    
+
+
+
 });
 
 //Update User Details

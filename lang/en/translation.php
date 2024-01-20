@@ -1,7 +1,7 @@
 <?php
 return [
     "menu"=>"Menu",
-    "dashboards"=>"Dashboards",
+    "dashboards"=>"Dashboard",
     "analytics"=>"Analytics",
     "crm"=>"CRM",
     "ecommerce"=>"Ecommerce",

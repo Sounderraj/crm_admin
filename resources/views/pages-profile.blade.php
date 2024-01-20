@@ -117,19 +117,19 @@
                                                 <tbody>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Full Name :</th>
-                                                        <td class="text-muted">Anna Adame</td>
+                                                        <td class="text-muted">{{ auth()->user()->name ?: '-' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Mobile :</th>
-                                                        <td class="text-muted">+(1) 987 6543</td>
+                                                        <td class="text-muted">{{ auth()->user()->phone ?: '-' }}</td>
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">E-mail :</th>
-                                                        <td class="text-muted">daveadame@velzon.com</td>
+                                                        <td class="text-muted">{{ auth()->user()->email }} </td>
                                                     </tr>
                                                     <tr>
                                                         <th class="ps-0" scope="row">Location :</th>
-                                                        <td class="text-muted">California, United States
+                                                        <td class="text-muted">{{ }}
                                                         </td>
                                                     </tr>
                                                     <tr>

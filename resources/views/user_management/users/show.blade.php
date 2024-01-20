@@ -44,7 +44,6 @@
         </table>
     </div>
 
-
 @endsection
 @section('script')
     <script src="{{ URL::asset('build/libs/swiper/swiper-bundle.min.js') }}"></script>

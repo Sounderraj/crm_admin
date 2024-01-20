@@ -45,20 +45,102 @@
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.dashboards')</span>
                     </a>
                     @endcan
-                    @can('admin-dashboard')
+                    <!-- @can('admin-dashboard')
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span>Admin Dashboard</span>
                     </a>
-                    @endcan
+                    @endcan -->
                 </li>
-
                 <li class="nav-item">
-                    @can('customer')
-                    <a class="nav-link menu-link" href="{{ route('customer.index') }}">
-                        <i class="ri-honour-line"></i> <span>Customer</span>
+                    @can('user-management')
+                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarPages">
+                        <i class="ri-admin-line"></i> <span>User Management</span>
+                    </a>
+                    @endcan
+                    <div class="collapse menu-dropdown {{ request()->is('user_management/*') ? 'show' : '' }}" id="sidebarPages">
+                        <ul class="nav nav-sm flex-column">
+                            @can('user-list')
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('user_management/users') || request()->is('user_management/users/*') ? 'active' : '' }}">Users</a>
+                            </li>
+                            @endcan
+                            @can('role-list')
+                            <li class="nav-item">
+                                <a href="{{ route('roles.index') }}" class="nav-link {{ request()->is('user_management/roles') || request()->is('user_management/roles/*') ? 'active' : '' }}">Roles</a>
+                            </li>
+                                @endcan
+                            @can('permission-list')
+                            <li class="nav-item">
+                                <a href="{{ route('permissions.index') }}" class="nav-link {{ request()->is('user_management/permissions') || request()->is('user_management/permissions/*') ? 'active' : '' }}">Permissions</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    @can('customer-management')
+                    <a class="nav-link menu-link {{ request()->is('masters/customer') ||  request()->is('masters/customer/*') ? 'active' : '' }}" href="{{ route('customer.index') }}">
+                        <i class="ri-user-line"></i> <span>Customers</span>
                     </a>
                     @endcan
                 </li>
+                <li class="nav-item">
+                    @can('product-management')
+                    <a class="nav-link menu-link" href="#productManagePages" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="productManagePages">
+                        <i class="ri-shopping-basket-line"></i> <span>Products</span>
+                    </a>
+                    @endcan
+                    <div class="collapse menu-dropdown {{ request()->is('product_management/*') ? 'show' : '' }}" id="productManagePages">
+                        <ul class="nav nav-sm flex-column">
+                            @can('product-list')
+                            <li class="nav-item">
+                                <a href="{{ route('product.index') }}" class="nav-link {{ request()->is('product_management/product') || request()->is('user_management/product/*') ? 'active' : '' }}">List</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                  
+                  <a class="nav-link menu-link {{ request()->is('leads') ||  request()->is('leads/*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
+                      <i class="ri-contacts-line"></i> <span>Leads</span>
+                  </a>
+                 
+                </li>
+
+                <li class="nav-item">
+                    @can('sale-management')
+                    <a class="nav-link menu-link" href="#salesManagePages" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="salesManagePages">
+                        <i class="ri-shopping-cart-line"></i> <span>Sales</span>
+                    </a>
+                    @endcan
+                    <div class="collapse menu-dropdown {{ request()->is('sale_management/*') ? 'show' : '' }}" id="salesManagePages">
+                        <ul class="nav nav-sm flex-column">
+                            @can('estimate-list')
+                            <li class="nav-item">
+                                <a href="{{ route('estimate.index') }}" class="nav-link {{ request()->is('sale_management/estimate') || request()->is('sale_management/estimate/*') ? 'active' : '' }}">Estimates</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </div>
+                    <div class="collapse menu-dropdown {{ request()->is('sale_management/*') ? 'show' : '' }}" id="salesManagePages">
+                        <ul class="nav nav-sm flex-column">
+                            @can('invoice-list')
+                            <li class="nav-item">
+                                <a href="{{ route('invoice.index') }}" class="nav-link {{ request()->is('sale_management/invoice') || request()->is('sale_management/invoice/*') ? 'active' : '' }}">Invoices</a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>
+                
+
+
+
 {{--                    <div class="collapse menu-dropdown" id="sidebarDashboards">--}}
 {{--                        <ul class="nav nav-sm flex-column">--}}
 {{--                            <li class="nav-item">--}}
@@ -568,33 +650,6 @@
 {{--                    </div>--}}
 {{--                </li>--}}
 
-                <li class="nav-item">
-                    @can('user-management')
-                    <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sidebarPages">
-                        <i class="ri-pages-line"></i> <span>User Management</span>
-                    </a>
-                    @endcan
-                    <div class="collapse menu-dropdown {{ request()->is('user_management/*') ? 'show' : '' }}" id="sidebarPages">
-                        <ul class="nav nav-sm flex-column">
-                            @can('user-list')
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('user_management/users') || request()->is('user_management/users/*') ? 'active' : '' }}">Users</a>
-                            </li>
-                            @endcan
-                            @can('role-list')
-                            <li class="nav-item">
-                                <a href="{{ route('roles.index') }}" class="nav-link {{ request()->is('user_management/roles') || request()->is('user_management/roles/*') ? 'active' : '' }}">Roles</a>
-                            </li>
-                                @endcan
-                            @can('permission-list')
-                            <li class="nav-item">
-                                <a href="{{ route('permissions.index') }}" class="nav-link {{ request()->is('user_management/permissions') || request()->is('user_management/permissions/*') ? 'active' : '' }}">Permissions</a>
-                            </li>
-                            @endcan
-                        </ul>
-                    </div>
-                </li>
 {{--                <li class="nav-item">--}}
 {{--                    <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLanding">--}}
 {{--                        <i class="ri-rocket-line"></i> <span>@lang('translation.landing')</span>--}}
