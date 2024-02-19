@@ -1585,7 +1585,7 @@
                                 </div>
                                 <div class="mt-4 fs-14">
                                     <p>Premium Multipurpose Admin & Dashboard Template</p>
-                                    <p class="ff-secondary">You can build any type of web application like eCommerce, CRM, CMS, Project management apps, Admin Panels, etc using Velzon.</p>
+                                    <p class="ff-secondary">You can build any type of web application like eCommerce, CRM, CMS, Project management apps, Admin Panels, etc using CRM</p>
                                 </div>
                             </div>
                         </div>

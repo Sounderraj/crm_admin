@@ -42,7 +42,7 @@
                                                     <p class="mb-0">© <script>
                                                             document.write(new Date().getFullYear())
 
-                                                        </script> Borex . Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                                                        </script> Borex . Crafted with <i class="mdi mdi-heart text-danger"></i> by OIM</p>
                                                 </div>
                                             </div>
                                         </div>

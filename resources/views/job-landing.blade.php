@@ -218,7 +218,7 @@
                                 </h1>
 
                                 <h6 class="fs-18 mb-2">Find Job</h6>
-                                <p class="text-muted mb-0 fs-17">Search for your dream jobs from velzon.</p>
+                                <p class="text-muted mb-0 fs-17">Search for your dream jobs from CRM</p>
                             </div>
                         </div>
                     </div>
@@ -1176,7 +1176,7 @@
                             </div>
                             <div class="mt-4 fs-15">
                                 <p>Premium Multipurpose Admin & Dashboard Template</p>
-                                <p>You can build any type of web application like eCommerce, CRM, CMS, Project management apps, Admin Panels, etc using Velzon.</p>
+                                <p>You can build any type of web application like eCommerce, CRM, CMS, Project management apps, Admin Panels, etc using CRM</p>
                                 <ul class="list-inline mb-0 footer-social-link">
                                     <li class="list-inline-item">
                                         <a href="javascript: void(0);" class="avatar-xs d-block">

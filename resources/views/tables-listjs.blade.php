@@ -60,7 +60,7 @@
                                     </th>
                                     <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                     <td class="customer_name">Mary Cousar</td>
-                                    <td class="email">marycousar@velzon.com</td>
+                                    <td class="email">marycousar@CRMcom</td>
                                     <td class="phone">580-464-4694</td>
                                     <td class="date">06 Apr, 2021</td>
                                     <td class="status"><span class="badge bg-success-subtle text-success text-uppercase">Active</span></td>

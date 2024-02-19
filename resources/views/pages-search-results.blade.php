@@ -158,7 +158,7 @@
                             <div class="border border-dashed"></div>
 
                             <div class="py-3">
-                                <h5 class="mb-1"><a href="javascript:void(0);">Skote - Admin & Dashboard Template by Themesbrand</a></h5>
+                                <h5 class="mb-1"><a href="javascript:void(0);">Skote - Admin & Dashboard Template by OIM</a></h5>
                                 <p class="text-success mb-2">https://themesbrand.com/skote/</p>
                                 <p class="text-muted mb-2">Skote is an admin dashboard template that is a beautifully crafted, clean & minimal designed admin template with Dark, Light Layouts with RTL options. You can build any type of web application like Saas based interface, eCommerce, Crypto, CRM, CMS, Project management apps, Admin Panels, etc.</p>
                                 <ul class="list-inline d-flex align-items-center g-3 text-muted fs-14 mb-0">
@@ -202,7 +202,7 @@
                             <div class="border border-dashed"></div>
 
                             <div class="py-3">
-                                <h5 class="mb-1"><a href="javascript:void(0);">Doson - Angular Admin & Dashboard Template by Themesbrand</a></h5>
+                                <h5 class="mb-1"><a href="javascript:void(0);">Doson - Angular Admin & Dashboard Template by OIM</a></h5>
                                 <p class="text-success mb-2">https://themesbrand.com/dason/angular/</p>
                                 <p class="text-muted mb-2">Dason is a simple and beautiful admin template built with Bootstrap ^5.1.3. It has 5+ different layouts and 3 modes ( Dark, Light & RTL ) which are managed by SCSS only. You can simply change to any layouts or mode by changing a couple of lines code.</p>
                                 <ul class="list-inline d-flex align-items-center g-3 text-muted fs-14 mb-0">

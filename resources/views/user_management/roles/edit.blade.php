@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title') @lang('translation.timeline') @endsection
 @section('css')
-    <link href="{{ URL::asset('build/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     @component('components.breadcrumb')
@@ -67,7 +67,7 @@
             <div class="form-group">
                 <strong>Permission:</strong>
                 <br/>
-                {!! Form::select('permission[]', $permission,$rolePermissions, array('class' => 'form-control select2', 'id' => 'permSelect' ,'multiple')) !!}
+                {!! Form::select('permission[]', $permission,$rolePermissions, array('class' => 'form-control js-example-basic-multiple select2-hidden-accessible', 'id' => 'permSelect' ,'multiple')) !!}
             </div>
         </div>
 
@@ -80,13 +80,11 @@
 {!! Form::close() !!}
 @endsection
 @section('script')
-    <script src="{{ URL::asset('build/libs/swiper/swiper-bundle.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/timeline.init.js') }}"></script>
-
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
-    <script>
-        $(function () {
-            $("#permSelect").select2();
-        })
-    </script>
+<script src="{{ URL::asset('build/js/pages/form-validation.init.js') }}"></script>
+<!--jquery cdn-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!--select2 cdn-->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ URL::asset('build/js/pages/select2.init.js') }}"></script>
+<script src="{{ URL::asset('build/js/app.js') }}"></script>
 @endsection

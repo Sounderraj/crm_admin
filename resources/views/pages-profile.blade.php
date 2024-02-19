@@ -380,7 +380,7 @@
                                                     </div>
                                                     <div class="flex-grow-1 overflow-hidden">
                                                         <p class="mb-1">Website :</p>
-                                                        <a href="#" class="fw-semibold">www.velzon.com</a>
+                                                        <a href="#" class="fw-semibold">www.CRMcom</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -626,7 +626,7 @@
                                                                         data-bs-parent="#accordionExample">
                                                                         <div class="accordion-body ms-2 ps-5">
                                                                             <p class="text-muted mb-2"> Every team project
-                                                                                can have a velzon. Use the velzon to share
+                                                                                can have a CRM Use the velzon to share
                                                                                 information with your team to understand and
                                                                                 contribute to your project.</p>
                                                                             <div class="avatar-group">
@@ -1126,7 +1126,7 @@
                                                                         <div class="accordion-body ms-2 ps-5">
                                                                             <p class="text-muted mb-2">
                                                                                 Every team project can
-                                                                                have a velzon. Use the
+                                                                                have a CRM Use the
                                                                                 velzon to share
                                                                                 information with your
                                                                                 team to understand and

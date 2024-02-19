@@ -95,7 +95,7 @@
                         </span>
                     </div>
                     <input type="text" class="form-control" id="websiteInput" placeholder="www.example.com"
-                        value="www.velzon.com">
+                        value="www.CRMcom">
                 </div>
                 <div class="mb-3 d-flex">
                     <div class="avatar-xs d-block flex-shrink-0 me-3">
@@ -229,7 +229,7 @@
                                     <div class="mb-3">
                                         <label for="websiteInput1" class="form-label">Website</label>
                                         <input type="text" class="form-control" id="websiteInput1"
-                                            placeholder="www.example.com" value="www.velzon.com" />
+                                            placeholder="www.example.com" value="www.CRMcom" />
                                     </div>
                                 </div> -->
                                 <!--end col-->

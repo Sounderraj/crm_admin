@@ -44,14 +44,14 @@ class ProfileController extends Controller
      */
     public function edit(string $id)
     {
-        if (Auth::user()->can('profile-edit')) {
+        // if (Auth::user()->can('profile-edit')) {
 
             $data = Auth::user()->id;
 
             return view('profile.edit',compact('data'));
-        }else{
-            return view('auth-404-basic');
-        }
+        // }else{
+        //     return view('auth-404-basic');
+        // }
 
     }
 

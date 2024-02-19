@@ -92,9 +92,9 @@
                                         <td>{{ $product->sku_number }}</td>
                                         <td>{{ $product->hsn_code }} - {{ $product->sac_code }}</td>
                                         <td>{{ $product->unit }}</td>
-                                        <td>{{ $product->currencysym->symbol .' '. $product->selling_price }}</td>
-                                        <td>{{ $product->currencysym->symbol .' '. $product->cost_price }}</td>
-                                        <td>@if($product->track_inventry){{ $product->stock_in_hand }}@endif</td>
+                                        <td>{{ ($product->currencysym->symbol ?? '₹') .' '. $product->selling_price }}</td>
+                                        <td>{{ ($product->currencysym->symbol ?? '₹') .' '. $product->cost_price }}</td>
+                                        <td>@if($product->track_inventry){{ $product->stock_in_hand }} @else - @endif</td>
                                         <td>
                                             @can('product-edit')
                                                 <a class="btn btn-sm btn-primary" href="{{ route('product.edit',$product->id) }}">Edit</a>
