@@ -231,6 +231,13 @@ return [
     "links" => "Links",
     "range-area" => "Range Area",
     "funnel" => "Funnel",
+
+    "tax_rate" => 'Tax Rates',
+    "currency" => 'Currency',
+    "salesorder" => 'Sales Orders',
+    "organization" => 'Organization',
+    "vendors" => 'Vendors',
+    "purchaseorder" => 'Purchase Orders',
 ];
 ?>
 

@@ -27,8 +27,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('permissions', \App\Http\Controllers\PermissionController::class);
     });
 
-    Route::group(['prefix' => 'masters'], function (){
-        Route::resource('customer', \App\Http\Controllers\CustomerController::class);
+    Route::group(['prefix' => 'account'], function () {
+        Route::resource('profile', \App\Http\Controllers\Account\ProfileController::class);
     });
 
     Route::group(['prefix' => 'product_management'], function (){
@@ -40,13 +40,30 @@ Route::group(['middleware' => ['auth']], function() {
     });
 
     Route::group(['prefix' => 'sale_management'], function (){
+        Route::resource('customer', \App\Http\Controllers\CustomerController::class);
         Route::resource('estimate', \App\Http\Controllers\EstimateController::class);
+        Route::resource('orders', \App\Http\Controllers\SalesOrderController::class);
         Route::resource('invoice', \App\Http\Controllers\InvoiceController::class);
     });
-    
+
+    Route::group(['prefix' => 'purchase_manage'], function (){
+        Route::resource('vendors', \App\Http\Controllers\VendorController::class);
+        Route::resource('purchaseorders', \App\Http\Controllers\PurchaseOrderController::class);
+    });
+
+    Route::group(['prefix' => 'settings'], function (){
+        Route::resource('organization', \App\Http\Controllers\Settings\OrganizationController::class)->names('settings.organization');
+        Route::resource('taxrates', \App\Http\Controllers\Settings\TaxRatesController::class)->names('settings.taxrates');
+        Route::resource('taxrates_default', \App\Http\Controllers\Settings\TaxRatesDefaultController::class)->names('settings.taxrates_default');
+        Route::resource('currency', \App\Http\Controllers\Settings\CurrencyController::class)->names('settings.currency');
+    });
 
 
 
+});
+
+Route::group(['prefix' => 'web-apis'], function (){
+    Route::get('getProductDetails', [\App\Http\Controllers\AjaxAPIController::class,'getProductDetails']);
 });
 
 //Update User Details
@@ -54,3 +71,5 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
+

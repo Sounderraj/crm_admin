@@ -1,10 +1,3 @@
-/*
-Template Name: Velzon - Admin & Dashboard Template
-Author: Themesbrand
-Website: https://Themesbrand.com/
-Contact: Themesbrand@gmail.com
-File: datatables init js
-*/
 
 function initializeTables() {
     let example = new DataTable('#example',);

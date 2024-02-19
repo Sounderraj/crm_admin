@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Arr;
+use App\Models\Customer;
+use App\Models\GST_Treatment;
+use App\Models\Currency;
 
 
 class CustomerController extends Controller
@@ -34,7 +31,10 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create');
+        $gst_treatment = GST_Treatment::active()->get();
+        $currency = Currency::active()->get();
+        
+        return view('customer.create',compact('gst_treatment','currency'));
     }
 
     /**
@@ -44,8 +44,14 @@ class CustomerController extends Controller
     {
         $params = $request->all();
 
-        $params['phone'] = '+91-'.$params['phone'];
-        unset($params['_token']);
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'customer_name' => 'required',
+            'email' => 'required|email|unique:customers,email',
+            'company_name' => 'required',
+            'mobile' => 'required',
+        ]);
 
         Customer::create($params);
 
@@ -67,8 +73,10 @@ class CustomerController extends Controller
     public function edit(string $id)
     {
         $user = Customer::find($id);
+        $gst_treatment = GST_Treatment::active()->get();
+        $currency = Currency::active()->get();
 
-        return view('customer.edit',compact('user'));
+        return view('customer.edit',compact('user','gst_treatment','currency'));
     }
 
     /**
@@ -77,15 +85,16 @@ class CustomerController extends Controller
     public function update(Request $request, string $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'customer_name' => 'required',
             'email' => 'required|email|unique:customers,email,'.$id,
             'company_name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'mobile' => 'required',
         ]);
 
         $input = $request->all();
-
+        
         $user = Customer::find($id);
         $user->update($input);
 

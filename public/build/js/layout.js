@@ -1,12 +1,3 @@
-/*
-Template Name: Velzon - Admin & Dashboard Template
-Author: Themesbrand
-Version: 3.5.0
-Website: https://Themesbrand.com/
-Contact: Themesbrand@gmail.com
-File: Layout Js File
-*/
-
 (function () {
 
     'use strict';

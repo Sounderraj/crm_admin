@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\CreateAdminUserSeeder;
 use Database\Seeders\PermissionTableSeeder;
+use Database\Seeders\CurrencySeeder;
+use Database\Seeders\GST_TreatmentSeeder;
+use Database\Seeders\OrganizationProfileSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionTableSeeder::class,
             CreateAdminUserSeeder::class,
+            GST_TreatmentSeeder::class,
+            CurrencySeeder::class,
+            OrganizationProfileSeeder::class,
         ]);
     }
 }

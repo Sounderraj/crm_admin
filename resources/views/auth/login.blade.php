@@ -17,7 +17,7 @@
                                 <h1>{{ config('app.name') }}</h1>
                             </a>
                         </div>
-{{--                        <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>--}}
+{{--                        <p class="mt-3 fs-15 fw-medium"> Admin & Dashboard </p>--}}
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <div class="card-body p-4">
                             <div class="text-center mt-2">
                                 <h5 class="text-primary">Welcome Back !</h5>
-{{--                                <p class="text-muted">Sign in to continue to Velzon.</p>--}}
+                               <p class="text-muted">Sign in to continue to {{ config('app.name') }}.</p>
                             </div>
                             <div class="p-2 mt-4">
                                 <form action="{{ route('login') }}" method="POST">
@@ -88,9 +88,9 @@
                     </div>
                     <!-- end card -->
 
-                    <div class="mt-4 text-center">
+                    <!-- <div class="mt-4 text-center">
                         <p class="mb-0">Don't have an account ? <a href="register" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

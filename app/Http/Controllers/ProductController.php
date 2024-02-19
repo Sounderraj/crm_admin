@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Currency;
 use App\Models\Product;
+use App\Models\TaxRates;
+use Illuminate\Http\Request;
+use App\Models\TaxRatesDefault;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -15,7 +18,24 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->can('product-list')) {
-            $data = Product::orderBy('id','DESC')->paginate(5);
+
+            $query = Product::query();
+
+            if ($request->filled('sp_min')) {
+                $query->where('selling_price', '>=', $request->input('sp_min'));
+            }
+            if ($request->filled('sp_max')) {
+                $query->where('selling_price', '<=', $request->input('sp_max'));
+            }    
+            if ($request->filled('pp_min')) {
+                $query->where('purchase_account', '>=', $request->input('pp_min'));
+            }
+            if ($request->filled('pp_max')) {
+                $query->where('purchase_account', '<=', $request->input('pp_max'));
+            }
+
+            $data = $query->orderBy('id', 'DESC')->paginate(500000);
+
             return view('product.index',compact('data'))
                 ->with('i', ($request->input('page', 1) - 1) * 5);
         }else{
@@ -29,7 +49,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        $taxrates = TaxRates::select('id','tax_name','tax_rate_percentage')->get();
+        $taxrates_default = TaxRatesDefault::find(1) ?? NULL;
+        $default_currency = Currency::GetBaseCurrency()->first();
+
+        return view('product.create', compact('taxrates','taxrates_default','default_currency'));
     }
 
     /**
@@ -37,9 +61,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $params = $request->all();
+        $this->validate($request, [
+            'name' => 'required',
+            'tax_preference' => 'required',
+            'intra_tax_rate_id' => 'required_if:tax_preference,Taxable',
+            'inter_tax_rate_id' => 'required_if:tax_preference,Taxable',
+            'selling_price' => 'required|numeric',
+            'cost_price' => 'required|numeric',
+         ]);
 
-        unset($params['_token']);
+        $params = $request->all();
+        $params['track_inventry'] = $request->has('track_inventry');
 
         Product::create($params);
 
@@ -61,8 +93,11 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::find($id);
+        $taxrates = TaxRates::select('id','tax_name','tax_rate_percentage')->get();
+        $taxrates_default = TaxRatesDefault::find(1) ?? NULL;
+        $default_currency = Currency::GetBaseCurrency()->first();
 
-        return view('product.edit',compact('product'));
+        return view('product.edit',compact('product','taxrates','taxrates_default','default_currency'));
     }
 
     /**
@@ -72,14 +107,15 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'sku_number' => 'required',
-            'rate' => 'required',
-            'description' => 'required',
-            'quantity' => 'required',
-            'unit' => 'required',
-        ]);
+            'tax_preference' => 'required',
+            'intra_tax_rate_id' => 'required_if:tax_preference,Taxable',
+            'inter_tax_rate_id' => 'required_if:tax_preference,Taxable',
+            'selling_price' => 'required|numeric',
+            'cost_price' => 'required|numeric',
+         ]);
 
         $input = $request->all();
+        $input['track_inventry'] = $request->has('track_inventry');
 
         $product = Product::find($id);
         $product->update($input);
@@ -95,7 +131,6 @@ class ProductController extends Controller
     {
 
         Product::find($id)->delete();
-
         return redirect()->route('product.index')
             ->with('success','Product deleted successfully');
     }
