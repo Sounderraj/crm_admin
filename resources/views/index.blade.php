@@ -139,7 +139,7 @@
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
                                             data-target="{{ $reports->leads ?? 0 }}">0</span></h4>
-                                    <a href="{{ route('leads.index') }}" class="text-decoration-underline">View all orders</a>
+                                    <a href="{{ route('leads.index') }}" class="text-decoration-underline">View all</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-primary-subtle rounded fs-3">
