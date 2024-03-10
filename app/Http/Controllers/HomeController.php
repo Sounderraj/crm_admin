@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Leads;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\SalesOrder;
+use App\Models\Organization;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -36,7 +41,17 @@ class HomeController extends Controller
 
     public function root()
     {
-        return view('index');
+
+        $org = Organization::find(1) ?? null;
+
+        $reports['customers'] = Customer::count() ?? 0;
+        $reports['leads'] = Leads::count() ?? 0;
+        $reports['orders'] = SalesOrder::count() ?? 0;
+        $reports['products'] = Product::count() ?? 0;
+        
+        $reports = (object) $reports;
+
+        return view('index', compact('org','reports'));
     }
 
     /*Language Translation*/

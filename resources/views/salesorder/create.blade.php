@@ -128,7 +128,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <select name="product_tax_id" id="productTax-1" class="product-tax form-control js-example-basic-single select2-hidden-accessible" required onchange="getProductDetails(1)">
+                                        <select name="product_tax_id" id="productTax-1" class="product-tax form-control js-example-basic-single select2-hidden-accessible" required>
                                             <!-- <option value="" disabled selected></option> -->
                                             @foreach($tax_pref as $val)
                                                 <option value="{{ $val }}">{{ $val }}</option>
@@ -161,36 +161,43 @@
                                 </tr>
                                 <tr class="border-top border-top-dashed mt-2">
                                     <td colspan="3"></td>
-                                    <td colspan="2" class="p-0">
+                                    <td colspan="3" class="p-0">
                                         <table class="table table-borderless table-sm table-nowrap align-middle mb-0">
                                             <tbody>
                                                 <tr>
                                                     <th scope="row">Sub Total</th>
-                                                    <td style="width:150px;">
+                                                    <td></td>
+                                                    <td >
                                                         <input type="text" class="form-control bg-light border-0" id="cart-subtotal" placeholder="0.00" readonly />
                                                     </td>
                                                 </tr>
                                                
                                                 <tr>
-                                                    <th scope="row">Discount <small class="text-muted"></small></th>
+                                                    <th scope="row">Discount (%)<small class="text-muted"></small></th>
+                                                    <td >
+                                                        <input type="text" class="form-control bg-light border-0" id="cart-discount-input" value="0" max="100" oninput="limitDiscountInput(this)" onblur="recalculateCart()"/>
+                                                    </td>
                                                     <td>
                                                         <input type="text" class="form-control bg-light border-0" id="cart-discount" placeholder="0.00" readonly />
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Estimated Tax </th>
+                                                    <td></td>
                                                     <td>
                                                         <input type="text" class="form-control bg-light border-0" id="cart-tax" placeholder="0.00" readonly />
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Shipping Charge</th>
+                                                    <td></td>
                                                     <td>
                                                         <input type="text" class="form-control bg-light border-0" id="cart-shipping" placeholder="0.00" readonly />
                                                     </td>
                                                 </tr>
                                                 <tr class="border-top border-top-dashed">
                                                     <th scope="row">Total Amount</th>
+                                                    <td></td>
                                                     <td>
                                                         <input type="text" name="total_amount" class="form-control bg-light border-0" id="cart-total" placeholder="0.00" readonly />
                                                     </td>
@@ -262,9 +269,11 @@
     var BASE_URL = "{{env('APP_URL')}}";
 	var subtotal = 0;
     var taxRate = 0.125;
+    var taxRate = 0;
     var shippingRate = 0;
-    var discountRate = 0.15;
-
+    var discountRate = document.getElementById("cart-discount-input").value ?? 0;
+    var MAXVALUE_QUANTITY = 10000000;
+var paymentSign = "";
     </script>
 <script src="{{ URL::asset('build/js/salesorder/main.js') }}"></script>
 <script>
@@ -297,7 +306,7 @@ function new_link() {
             
         </td>
         <td>
-            <input type="number" class="form-control product-price bg-light border-0" id="productRate-${count}" step="0.01" placeholder="$0.00" required readonly/>
+            <input type="number" class="form-control product-price bg-light border-0" id="productRate-${count}" step="0.01" placeholder="0.00" required readonly/>
             <div class="invalid-feedback">
                 Please enter a rate
             </div>
@@ -312,7 +321,7 @@ function new_link() {
         
         <td class="text-end">
             <div>
-                <select name="product_tax_id" id="productTax-${count}" class="product-tax form-control js-example-basic-single select2-hidden-accessible" required onchange="getProductDetails(${count})">
+                <select name="product_tax_id" id="productTax-${count}" class="product-tax form-control js-example-basic-single select2-hidden-accessible" required >
                     @foreach($tax_pref as $val)
                         <option value="{{ $val }}">{{ $val }}</option>
                     @endforeach
@@ -359,8 +368,7 @@ function new_link() {
 	isData();
 	remove();
 	amountKeyup();
-	resetRow()
-
+	resetRow();
 }
 
 function getProductDetails(count) {
@@ -376,11 +384,18 @@ function getProductDetails(count) {
             if (xhr.status === 200) {
                 // Parse the response JSON
                 var response = JSON.parse(xhr.responseText);
+                console.log(response);
+               
+                var selling_price = response.selling_price ?? 0;
+                selling_price = parseFloat(selling_price.replace(/[^\d.-]/g, ''));
 
-                // Update the rate field with the fetched rate
-                document.getElementById('productRate-' + count).value = response.selling_price ?? 0;
-                if(response.tax_preference == '')
-                document.getElementById('productRate-' + count).value = response.selling_price ?? 0;
+                document.getElementById('productRate-' + count).value = selling_price;
+                var productTaxSelect = $('#productTax-' + count);
+                
+                // Reset the Select2 dropdown and then select the desired option
+                productTaxSelect.val(response.tax_preference).trigger('change');
+
+
             } else {
 
                 // Handle the error case
@@ -393,6 +408,18 @@ function getProductDetails(count) {
     xhr.send();
 }
 
+function limitDiscountInput(input) {
+    // Remove non-numeric characters from the input value
+    var inputValue = input.value.replace(/\D/g, '');
+
+    // Ensure the input value is not greater than 100
+    if (parseInt(inputValue) > 100) {
+        inputValue = '100';
+    }
+
+    // Update the input value with the sanitized value
+    input.value = inputValue;
+}
 
 </script>
 @endsection

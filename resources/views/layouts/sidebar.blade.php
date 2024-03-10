@@ -38,19 +38,24 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-{{--                <li class="menu-title"><span>@lang('translation.menu')</span></li>--}}
+              <!-- <li class="menu-title"><span>@lang('translation.menu')</span></li> -->
+                @can('dashboard')
                 <li class="nav-item">
-                    @can('dashboard')
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                  <a class="nav-link menu-link " href="{{ route('root') }}">
+                      <i class="ri-dashboard-2-line"></i> <span>@lang('translation.dashboards')</span>
+                  </a>
+                </li>
+                @endcan
+                <!-- <li class="nav-item"> -->
+                    <!-- <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span>@lang('translation.dashboards')</span>
-                    </a>
-                    @endcan
+                    </a> -->
                     <!-- @can('admin-dashboard')
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="ri-dashboard-2-line"></i> <span>Admin Dashboard</span>
                     </a>
                     @endcan -->
-                </li>
+                <!-- </li> -->
                 <li class="nav-item">
                     @can('user-management')
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"

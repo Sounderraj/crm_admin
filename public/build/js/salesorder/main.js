@@ -1,5 +1,4 @@
-var MAXVALUE_QUANTITY = 10000000;
-var paymentSign = "";
+
 Array.from(document.getElementsByClassName("product-line-price")).forEach(function (item) {
 	item.value = paymentSign +"0.00"
 });
@@ -79,7 +78,11 @@ function isData() {
 				if (parseInt(e.nextElementSibling.value) > 1) {
 					event.target.nextElementSibling.value--;
 					var itemAmount = e.parentElement.parentElement.previousElementSibling.querySelector(".product-price").value;
-					var priceselection = e.parentElement.parentElement.nextElementSibling.querySelector(".product-line-price");
+
+					var priceTaxselect = e.parentElement.parentElement.nextElementSibling.querySelector(".product-tax");
+
+					var priceselection = e.parentElement.parentElement.nextElementSibling.nextElementSibling.querySelector(".product-line-price");
+
 					// var productQty = 1;
 					var productQty = e.parentElement.querySelector(".product-quantity").value;
 					updateQuantity(productQty, itemAmount, priceselection);
@@ -110,7 +113,7 @@ function new_link() {
 		"</div>" +
 		"</td>" +
 		"<td>" +
-		'<input class="form-control bg-light border-0 product-price" type="number" id="productRate-' + count + '" step="0.01" placeholder="$0.00">' +
+		'<input class="form-control bg-light border-0 product-price" type="number" id="productRate-' + count + '" step="0.01" placeholder="0.00">' +
 		"</td>" +
 		"<td>" +
 		'<div class="input-step">' +
@@ -121,7 +124,7 @@ function new_link() {
 		"</td>" +
 		'<td class="text-end">' +
 		"<div>" +
-		'<input type="text" class="form-control bg-light border-0 product-line-price" id="productPrice-' + count + '" value="$0.00" placeholder="$0.00" />' +
+		'<input type="text" class="form-control bg-light border-0 product-line-price" id="productPrice-' + count + '" value="0.00" placeholder="0.00" />' +
 		"</div>" +
 		"</td>" +
 		'<td class="product-removal">' +
@@ -150,8 +153,9 @@ function new_link() {
 remove();
 /* Set rates + misc */
 var taxRate = 0.125;
+var taxRate = 0;
 var shippingRate = 65.0;
-var discountRate = 0.15;
+var discountRate = document.getElementById("cart-discount-input").value ?? 0;
 
 function remove() {
 	Array.from(document.querySelectorAll(".product-removal a")).forEach(function (el) {
@@ -185,6 +189,8 @@ function recalculateCart() {
 		});
 	});
    
+	discountPercentage = document.getElementById("cart-discount-input").value ?? 0;
+	discountRate = discountPercentage / 100;
     // alert(subtotal + "asd" + taxRate)
 	/* Calculate totals */
 	var tax = subtotal * taxRate;
@@ -233,6 +239,7 @@ function updateQuantity(amount, itemQuntity, priceselection) {
 	var linePrice = amount * itemQuntity;
 	/* Update line price display and recalc cart totals */
 	linePrice = linePrice.toFixed(2);
+	// alert(priceselection.value)
 	priceselection.value = paymentSign + linePrice;
 
 	recalculateCart();
