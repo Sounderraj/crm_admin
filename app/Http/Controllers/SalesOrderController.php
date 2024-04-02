@@ -40,11 +40,10 @@ class SalesOrderController extends Controller
         $products = Product::select('id','name')->get();
 
         $tax_pref = Product::getTaxPreferenceEnumValues();
-        $tax_pref = array_diff($tax_pref, ['Taxable']);
-        $pos = PlaceOfSupply::select('id','short_code','name','intra_state')->get();
-        
+        // $tax_pref = array_diff($tax_pref, ['Taxable']);
+        $pos = PlaceOfSupply::select('id','short_code','name','type')->get();
 
-        return view('salesorder.create',compact('customers','nextsaleordernum','products','tax_pref','pos'));
+        return view('salesorder.create', compact('customers','nextsaleordernum','products','tax_pref','pos'));
     }
 
     /**
@@ -94,7 +93,7 @@ class SalesOrderController extends Controller
 
         $tax_pref = Product::getTaxPreferenceEnumValues();
         $tax_pref = array_diff($tax_pref, ['Taxable']);
-        $pos = PlaceOfSupply::select('id','short_code','name','intra_state')->get();
+        $pos = PlaceOfSupply::select('id','short_code','name','type')->get();
         
         return view('salesorder.edit',compact('saleorder','customers','nextsaleordernum','products','tax_pref','pos'));
     }

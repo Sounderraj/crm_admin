@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Customer;
-use App\Models\GST_Treatment;
 use App\Models\Currency;
+use App\Models\Customer;
+use Illuminate\Http\Request;
+use App\Models\GST_Treatment;
+use App\Models\PlaceOfSupply;
+use Illuminate\Support\Facades\Auth;
 
 
 class CustomerController extends Controller
@@ -33,8 +34,9 @@ class CustomerController extends Controller
     {
         $gst_treatment = GST_Treatment::active()->get();
         $currency = Currency::active()->get();
+        $place_of_supplies = PlaceOfSupply::select('id','short_code','name')->get();
         
-        return view('customer.create',compact('gst_treatment','currency'));
+        return view('customer.create',compact('gst_treatment','currency','place_of_supplies'));
     }
 
     /**
@@ -75,8 +77,9 @@ class CustomerController extends Controller
         $user = Customer::find($id);
         $gst_treatment = GST_Treatment::active()->get();
         $currency = Currency::active()->get();
+        $place_of_supplies = PlaceOfSupply::select('id','short_code','name')->get();
 
-        return view('customer.edit',compact('user','gst_treatment','currency'));
+        return view('customer.edit',compact('user','gst_treatment','currency','place_of_supplies'));
     }
 
     /**

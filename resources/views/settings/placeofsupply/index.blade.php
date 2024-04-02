@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') @lang('translation.currency') @endsection
+@section('title') @lang('translation.placeofsupply') @endsection
 @section('css')
 <!--datatables css-->
 <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -9,7 +9,7 @@
 @endsection
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1') <a href="{{ route('settings.currency.index') }}"> @lang('translation.currency')</a> @endslot
+        @slot('li_1') <a href="{{ route('settings.placeofsupply.index') }}"> @lang('translation.placeofsupply')</a> @endslot
         @slot('title') List @endslot
     @endcomponent
 
@@ -24,13 +24,13 @@
             @endif
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Currencies</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Place of Supply</h4>
                     <div class="flex-shrink-0">
                         <div class="form-check form-switch form-switch-right form-switch-md">
-                            @can('currency-create')
-                                <a href="{{ route('settings.currency.create') }}" >
+                            @can('placeofsupply-create')
+                                <a href="{{ route('settings.placeofsupply.create') }}" >
                                 <button type="button" class="btn btn-md btn-primary">
-                                    <i class="ri-add-line align-middle me-1"></i>Add Currency
+                                    <i class="ri-add-line align-middle me-1"></i>Add 
                                 </button>
                                 </a>
                             @endcan
@@ -44,9 +44,9 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Currency Name</th>
-                                    <th>Currency Code</th>
-                                    <th>Currency Symbol</th>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Type</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -55,17 +55,17 @@
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $row->name }}</td>
-                                        <td>{{ $row->code }} @if($row->is_default) &nbsp;&nbsp;<span class="badge bg-success text-white">Base Currency</span> @endif</td>
-                                        <td>{{ $row->symbol }}</td>
+                                        <td>{{ $row->short_code }}</td>
+                                        <td>{{ $row->type }}</td>
                                         <td>
-                                            <!-- @can('currency-show')
-                                                <a class="btn btn-sm btn-info" href="{{ route('settings.currency.show',$row->id) }}">Show</a>
+                                            <!-- @can('placeofsupply-show')
+                                                <a class="btn btn-sm btn-info" href="{{ route('settings.placeofsupply.show',$row->id) }}">Show</a>
                                             @endcan -->
-                                            @can('currency-edit')
-                                                <a class="btn btn-sm btn-primary" href="{{ route('settings.currency.edit',$row->id) }}">Edit</a>
+                                            @can('placeofsupply-edit')
+                                                <a class="btn btn-sm btn-primary" href="{{ route('settings.placeofsupply.edit',$row->id) }}">Edit</a>
                                             @endcan
-                                            @can('currency-delete')
-                                                {!! Form::open(['method' => 'DELETE', 'route' => ['settings.currency.destroy', $row->id], 'style' => 'display:inline']) !!}
+                                            @can('placeofsupply-delete')
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['settings.placeofsupply.destroy', $row->id], 'style' => 'display:inline']) !!}
                                                 {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger', 'onclick' => 'return confirm("Are you sure you want to delete?")']) !!}
                                                 {!! Form::close() !!}
                                             @endcan

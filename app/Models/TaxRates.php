@@ -16,6 +16,7 @@ class TaxRates extends Model
         "tax_name",
         "tax_type",
         "tax_rate_percentage",
+        "tax_ids"
     ];
 
     public static function getTaxTypeEnumValues()

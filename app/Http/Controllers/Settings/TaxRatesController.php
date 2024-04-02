@@ -16,7 +16,7 @@ class TaxRatesController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->can('taxrates-list')) {
-            $data = TaxRates::orderBy('id','DESC')->paginate(5);
+            $data = TaxRates::orderBy('id','DESC')->paginate(50000);
             return view('settings.taxrates.index',compact('data'))
                 ->with('i', ($request->input('page', 1) - 1) * 5);
         }else{

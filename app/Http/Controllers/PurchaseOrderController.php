@@ -41,8 +41,7 @@ class PurchaseOrderController extends Controller
 
         $tax_pref = Product::getTaxPreferenceEnumValues();
         $tax_pref = array_diff($tax_pref, ['Taxable']);
-        $pos = PlaceOfSupply::select('id','short_code','name','intra_state')->get();
-        
+        $pos = PlaceOfSupply::select('id','short_code','name','type')->get();
 
         return view('purchaseorder.create',compact('customers','nextsaleordernum','products','tax_pref','pos'));
     }
@@ -94,7 +93,7 @@ class PurchaseOrderController extends Controller
 
         $tax_pref = Product::getTaxPreferenceEnumValues();
         $tax_pref = array_diff($tax_pref, ['Taxable']);
-        $pos = PlaceOfSupply::select('id','short_code','name','intra_state')->get();
+        $pos = PlaceOfSupply::select('id','short_code','name','type')->get();
         
         return view('purchaseorder.edit',compact('saleorder','customers','nextsaleordernum','products','tax_pref','pos'));
     }

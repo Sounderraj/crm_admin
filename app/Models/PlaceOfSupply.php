@@ -15,7 +15,12 @@ class PlaceOfSupply extends Model
     protected $fillable = [
         'short_code',
         'name',
-        'intra_state',
+        'type',
     ];
+
+    public static function getPlaceOfSupplyTypeEnumValues()
+    {
+        return ['Intra-state', 'Inter-state'];
+    }
 
 }

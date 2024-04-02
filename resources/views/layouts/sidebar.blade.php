@@ -203,6 +203,11 @@
                                 <a href="{{ route('settings.currency.index') }}" class="nav-link {{ request()->is('settings/currency') || request()->is('settings/currency/*') ? 'active' : '' }}">Currency</a>
                             </li>
                             @endcan
+                            @can('placeofsupply-list')
+                            <li class="nav-item">
+                                <a href="{{ route('settings.placeofsupply.index') }}" class="nav-link {{ request()->is('settings/placeofsupply') || request()->is('settings/placeofsupply/*') ? 'active' : '' }}">Place of Supply</a>
+                            </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>

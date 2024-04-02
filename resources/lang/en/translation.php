@@ -238,6 +238,7 @@ return [
     "organization" => 'Organization',
     "vendors" => 'Vendors',
     "purchaseorder" => 'Purchase Orders',
+    "placeofsupply" => 'Place of Supply',
 ];
 ?>
 

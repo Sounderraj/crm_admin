@@ -56,8 +56,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::group(['prefix' => 'settings'], function (){
         Route::resource('organization', \App\Http\Controllers\Settings\OrganizationController::class)->names('settings.organization');
         Route::resource('taxrates', \App\Http\Controllers\Settings\TaxRatesController::class)->names('settings.taxrates');
+        Route::resource('taxrates_group', \App\Http\Controllers\Settings\TaxRateGroupController::class)->names('settings.taxrates_group');
         Route::resource('taxrates_default', \App\Http\Controllers\Settings\TaxRatesDefaultController::class)->names('settings.taxrates_default');
         Route::resource('currency', \App\Http\Controllers\Settings\CurrencyController::class)->names('settings.currency');
+        Route::resource('placeofsupply', \App\Http\Controllers\Settings\PlaceOfSupplyController::class)->names('settings.placeofsupply');
     });
 
 
@@ -66,6 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 Route::group(['prefix' => 'web-apis'], function (){
     Route::get('getProductDetails', [\App\Http\Controllers\AjaxAPIController::class,'getProductDetails']);
+    Route::get('getCustomerDetails', [\App\Http\Controllers\AjaxAPIController::class,'getCustomerDetails']);
 });
 
 //Update User Details

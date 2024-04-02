@@ -1,12 +1,12 @@
 @extends('layouts.master')
-@section('title') @lang('translation.tax_rate') @endsection
+@section('title') @lang('translation.placeofsupply') @endsection
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     @component('components.breadcrumb')
-        @slot('li_1') <a href="{{ route('settings.taxrates.index') }}">@lang('translation.tax_rate')</a> @endslot
-        @slot('title') Default Tax Preference @endslot
+        @slot('li_1') <a href="{{ route('settings.placeofsupply.index') }}">@lang('translation.placeofsupply')</a> @endslot
+        @slot('title') Add @endslot
     @endcomponent
 
     <div class="row">
@@ -21,60 +21,51 @@
                     </ul>
                 </div>
             @endif
-
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Update Default Tax Preference</h4>
-                    <!-- <div class="flex-shrink-0">
-                        <div class="form-check form-switch form-switch-right form-switch-md">
-                            <label for="FormSelectDefault" class="form-label text-muted">Show Code</label>
-                            <input class="form-check-input code-switcher" type="checkbox" id="FormSelectDefault">
-                        </div>
-                    </div> -->
+                    <h4 class="card-title mb-0 flex-grow-1">Add Place of supply</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="live-preview">
                         <div class="row">
-                        <form action="{{ route('settings.taxrates_default.update', 1) }}" method="post" class="needs-validation" novalidate>
-                            @csrf
-                            @method('PUT')
+
+                            <form action="{{ route('settings.placeofsupply.store') }}" method="post" class="needs-validation" novalidate>
                             @csrf
                                 <div class="row mb-3">                                    
                                     <div class="col-sm-6 form-group">
-                                        <label>Intra State Tax Rate</label> <span class="text-danger">*</span>
-                                        <select name="intra_tax_rate_id" id="intra_tax_rate_id" class="form-control js-example-basic-single select2-hidden-accessible" required>
-                                            @php
-                                                $taxdefid = $taxrates_default->intra_tax_rate_id ?? '';
-                                            @endphp
-                                            @foreach($taxrates_1 as $val)
-                                                <option value="{{ $val->id }}" {{ $taxdefid==$val->id ? 'selected':'' }}  >{{ $val->tax_name ." [". $val->tax_rate_percentage ."%]" }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Code</label> <span class="text-danger">*</span>
+                                        <input type="text" name="short_code" id="short_code" class="form-control" placeholder="code" required value="{{ old('short_code') }}">
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">                                    
+                                    <div class="col-sm-6 form-group">
+                                        <label>Name</label> <span class="text-danger">*</span>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="name" required value="{{ old('name') }}">
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">                                    
                                     <div class="col-sm-6 form-group">
-                                        <label>Inter State Tax Rate</label> <span class="text-danger">*</span>
-                                        <select name="inter_tax_rate_id" id="inter_tax_rate_id" class="form-control js-example-basic-single select2-hidden-accessible" required>
+                                        <label>Code</label> <span class="text-danger">*</span>
+                                        <select name="type" id="type" class="form-control js-example-basic-single select2-hidden-accessible" required >
                                             @php
-                                                $taxdefid = $taxrates_default->inter_tax_rate_id ?? '';
+                                                $types = \App\Models\PlaceOfSupply::getPlaceOfSupplyTypeEnumValues();
                                             @endphp
-                                            @foreach($taxrates_2 as $val)
-                                                <option value="{{ $val->id }}" {{ $taxdefid==$val->id ? 'selected':'' }}  >{{ $val->tax_name ." [". $val->tax_rate_percentage ."%]" }}</option>
+                                            @foreach($types as $val)
+                                                <option value="{{ $val }}">{{ $val }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-
+                                
                                 <br>
                                 <div class="col-sm-6 mt-3 gap-4 text-end">
                                     <button type="button" class="btn btn-light mx-3">
-                                        <a href="{{ route('settings.taxrates.index') }}">Cancel</a>
+                                        <a href="{{ route('settings.placeofsupply.index') }}">Cancel</a>
                                     </button>
                                     <button type="submit" class="btn btn-success">Submit</button>
                                 </div>
-                            
                             </form>
                         </div>
                     </div>

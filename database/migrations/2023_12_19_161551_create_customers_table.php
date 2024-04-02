@@ -27,12 +27,13 @@ return new class extends Migration
 
             $table->string("gst_treatment", 10)->nullable();
             $table->unsignedBigInteger('gst_treatment_id')->nullable();
-            // $table->foreign('gst_treatment_id')->references('id')->on('m_gst_treatment');
+            $table->foreign('gst_treatment_id')->references('id')->on('m_gst_treatment');
             $table->string("gstin", 50)->nullable();
             $table->string("business_legal_name", 50)->nullable();
 
             $table->string("pan", 20)->nullable();
-            $table->string("place_of_supply", 50)->nullable();
+            $table->unsignedBigInteger('place_of_supply')->nullable();
+            $table->foreign('place_of_supply')->references('id')->on('m_place_of_supply');
             $table->enum('tax_preference', ['Taxable', 'Tax Exempt'])->nullable();
             $table->string("currency", 3)->nullable();
             $table->decimal("opening_balance", 15, 2)->default(0)->nullable();

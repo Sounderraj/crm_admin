@@ -48,9 +48,10 @@ class TaxRatesDefaultController extends Controller
     public function edit(string $id)
     {
         $taxrates_default = TaxRatesDefault::find($id);
-        $taxrates = TaxRates::select('id','tax_name','tax_rate_percentage')->get();
+        $taxrates_1 = TaxRates::select('id','tax_name','tax_rate_percentage')->whereNotNull('tax_ids')->get();
+        $taxrates_2 = TaxRates::select('id','tax_name','tax_rate_percentage')->where('tax_type','IGST')->get();
 
-        return view('settings.taxrates_default.edit',compact('taxrates_default','taxrates'));
+        return view('settings.taxrates_default.edit',compact('taxrates_default','taxrates_1','taxrates_2'));
     }
 
     /**

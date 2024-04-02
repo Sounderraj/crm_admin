@@ -29,24 +29,26 @@
                     <div class="row mb-3">
                         <div class="col-sm-6 form-group">
                             <label for="name">Customer Name</label> <span class="text-danger">*</span>
-                            <select name="customer_id" id="customer_id" class="form-control js-example-basic-single select2-hidden-accessible" required>
+                            <select name="customer_id" id="customer_id" class="form-control js-example-basic-single select2-hidden-accessible" required onchange="viewCustomerDetail(this.value)">
                                 <option value="" disabled selected>Select customer name</option>
                                 @foreach($customers as $val)
                                     <option value="{{ $val->id }}">{{ $val->company_name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-sm-6 form-group">
-                            <label for="name">Sale order number</label> <span class="text-danger">*</span>
-                            <input type="text" name="sale_order_id" id="sale_order_id" class="form-control" placeholder="Sale order number" value="{{$nextsaleordernum}}" required>
+                        <div class="col-sm-6 form-group mt-4" id="customer_sel_view" >
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-sm-6 form-group">
+                    <div class="col-sm-4 form-group">
+                            <label for="name">Sale order number</label> <span class="text-danger">*</span>
+                            <input type="text" name="sale_order_id" id="sale_order_id" class="form-control" placeholder="Sale order number" value="{{$nextsaleordernum}}" required>
+                        </div>
+                        <div class="col-sm-4 form-group">
                             <label for="name">Reference</label> 
                             <input type="text" name="reference_num" id="reference_num" class="form-control" placeholder="Reference number">
                         </div>
-                        <div class="col-sm-6 form-group">
+                        <div class="col-sm-4 form-group">
                             <label for="name">Sale Order Date</label> 
                             <input type="date" name="saleorder_date" id="saleorder_date" data-provider="flatpickr" data-date-format="d-m-Y" data-deafult-date="{{date('d-m-Y')}}" 
                             class="form-control" placeholder="Reference number" required>
@@ -55,10 +57,10 @@
                     
                     <div class="row mb-3">
                         <div class="col-sm-6 form-group">
-                            <label for="name">Place of Supply</label> 
+                            <label for="name">Place of Supply</label> <span class="text-danger">*</span>
                             <select name="place_of_supply" id="place_of_supply" class="form-control js-example-basic-single select2-hidden-accessible" required>
                                 @foreach($pos as $val)
-                                    <option value="{{ $val->id }}" data-intra_state="{{ $val->intra_state }}">{{ '['.$val->short_code.'] - '.$val->name  }}</option>
+                                    <option value="{{ $val->id }}" data-postype="{{ $val->type }}">{{ '['.$val->short_code.'] - '.$val->name  }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -188,13 +190,16 @@
                                                         <input type="text" class="form-control bg-light border-0" id="cart-tax" placeholder="0.00" readonly />
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <tr id="tax_setup">
+                                                        
+                                                </tr>
+                                                <!-- <tr>
                                                     <th scope="row">Shipping Charge</th>
                                                     <td></td>
                                                     <td>
                                                         <input type="text" class="form-control bg-light border-0" id="cart-shipping" placeholder="0.00" readonly />
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr class="border-top border-top-dashed">
                                                     <th scope="row">Total Amount</th>
                                                     <td></td>
@@ -273,7 +278,9 @@
     var shippingRate = 0;
     var discountRate = document.getElementById("cart-discount-input").value ?? 0;
     var MAXVALUE_QUANTITY = 10000000;
-var paymentSign = "";
+    var paymentSign = "";
+    var gst_calculate_type = "";
+
     </script>
 <script src="{{ URL::asset('build/js/salesorder/main.js') }}"></script>
 <script>
@@ -394,7 +401,7 @@ function getProductDetails(count) {
                 
                 // Reset the Select2 dropdown and then select the desired option
                 productTaxSelect.val(response.tax_preference).trigger('change');
-
+alert(gst_calculate_type);
 
             } else {
 
@@ -420,6 +427,63 @@ function limitDiscountInput(input) {
     // Update the input value with the sanitized value
     input.value = inputValue;
 }
+
+function viewCustomerDetail(id) {
+    $.ajax({
+        url: BASE_URL + 'web-apis/getCustomerDetails?id=' + id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            console.log(response);
+            let customer_name = response.customer_name ?? '';
+            let company_name = response.company_name ?? '';
+            let gst_treatment_id = response.gst_treatment_id ?? '';
+            let gst_treatment = response.gstTreatmentName ?? '';
+            let place_of_supply = response.place_of_supply ?? '';
+
+            let htmlContent = "<strong>Customer Name: </strong>" + customer_name + "<br>" +
+                            "<strong>Company Name: </strong>" + company_name + "<br>" +
+                            "<strong id='gst_treatment_id' data-id='" + gst_treatment_id + "'>GST Treatment: </strong>" + gst_treatment;
+
+            if(place_of_supply){
+                $('#place_of_supply').val(place_of_supply).trigger('change');
+            }
+
+            $('#customer_sel_view').html(htmlContent);
+            $('#customer_sel_view').show();
+            gstcalculateFlag();
+        },
+        error: function(xhr, status, error) {
+            console.error('Failed to fetch customer date');
+        }
+    });
+}
+
+function gstcalculateFlag() {
+    let gst_treatment_id = document.getElementById("gst_treatment_id").getAttribute('data-id');
+    let place_of_supply_postype = $('#place_of_supply option:selected').data('postype');
+
+    // Ensure gst_treatment_id is available and is either 1 or 2
+    if (gst_treatment_id && (gst_treatment_id === '1' || gst_treatment_id === '2')) {
+        // Determine gst_calculate_type based on place_of_supply_postype
+        switch (place_of_supply_postype) {
+            case 'Inter-state':
+                gst_calculate_type = 'Inter-state';
+                break;
+            case 'Intra-state':
+                gst_calculate_type = 'Intra-state';
+                break;
+            default:
+                // Handle the case where place of supply is not selected
+                console.log("Place of supply is not selected.");
+                break;
+        }
+    } else {
+        console.log("GST treatment is not 1 or 2 or gst_treatment_id is not available.");
+    }
+
+}
+
 
 </script>
 @endsection

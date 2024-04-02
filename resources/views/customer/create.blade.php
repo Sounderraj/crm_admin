@@ -129,12 +129,16 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="row mb-4">
-                                    <label class="form-label col-sm-2 pt-0">Place Of Supply</label> <span class="text-danger">*</span></label>
+                                <div class="row mb-4">
+                                    <label class="form-label col-sm-2 pt-0">Place Of Supply <span class="text-danger">*</span></label>
                                     <div class="col-sm-5">
-                                        <input type="text" name="place_of_supply" id="place_of_supply" placeholder="Place Of Supply" class="form-control">
+                                        <select name="place_of_supply" id="place_of_supply" class="form-control js-example-basic-single select2-hidden-accessible">
+                                            @foreach($place_of_supplies as $val)
+                                                <option value="{{ $val->id }}">{{ '[ '.$val->short_code.' ] - ' . $val->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                </div> -->
+                                </div>
 
                                 <div class="row mb-4">
                                     <label class="form-label col-sm-2 pt-0">Currency</label>

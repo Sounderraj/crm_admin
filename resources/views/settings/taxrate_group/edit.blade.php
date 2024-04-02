@@ -6,7 +6,7 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1') <a href="{{ route('settings.taxrates.index') }}">@lang('translation.tax_rate')</a> @endslot
-        @slot('title') Default Tax Preference @endslot
+        @slot('title') Edit @endslot
     @endcomponent
 
     <div class="row">
@@ -21,10 +21,15 @@
                     </ul>
                 </div>
             @endif
-
+            @if(session('error_1'))
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <p>{{ session('error_1') }}</p>
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Update Default Tax Preference</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Edit Tax Rate</h4>
                     <!-- <div class="flex-shrink-0">
                         <div class="form-check form-switch form-switch-right form-switch-md">
                             <label for="FormSelectDefault" class="form-label text-muted">Show Code</label>
@@ -35,33 +40,23 @@
                 <div class="card-body">
                     <div class="live-preview">
                         <div class="row">
-                        <form action="{{ route('settings.taxrates_default.update', 1) }}" method="post" class="needs-validation" novalidate>
+                        <form action="{{ route('settings.taxrates_group.update', $taxrates->id) }}" method="post" class="needs-validation" novalidate>
                             @csrf
                             @method('PUT')
                             @csrf
                                 <div class="row mb-3">                                    
                                     <div class="col-sm-6 form-group">
-                                        <label>Intra State Tax Rate</label> <span class="text-danger">*</span>
-                                        <select name="intra_tax_rate_id" id="intra_tax_rate_id" class="form-control js-example-basic-single select2-hidden-accessible" required>
-                                            @php
-                                                $taxdefid = $taxrates_default->intra_tax_rate_id ?? '';
-                                            @endphp
-                                            @foreach($taxrates_1 as $val)
-                                                <option value="{{ $val->id }}" {{ $taxdefid==$val->id ? 'selected':'' }}  >{{ $val->tax_name ." [". $val->tax_rate_percentage ."%]" }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Group Name</label> <span class="text-danger">*</span>
+                                        <input type="text" name="tax_name" id="tax_name" class="form-control" placeholder="Group Name" required value="{{ $taxrates->tax_name }}">
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">                                    
                                     <div class="col-sm-6 form-group">
-                                        <label>Inter State Tax Rate</label> <span class="text-danger">*</span>
-                                        <select name="inter_tax_rate_id" id="inter_tax_rate_id" class="form-control js-example-basic-single select2-hidden-accessible" required>
-                                            @php
-                                                $taxdefid = $taxrates_default->inter_tax_rate_id ?? '';
-                                            @endphp
-                                            @foreach($taxrates_2 as $val)
-                                                <option value="{{ $val->id }}" {{ $taxdefid==$val->id ? 'selected':'' }}  >{{ $val->tax_name ." [". $val->tax_rate_percentage ."%]" }}</option>
+                                        <label>Tax Rates</label> <span class="text-danger">*</span>
+                                        <select name="tax_ids[]" id="tax_ids" class="form-control js-example-basic-multiple select2-hidden-accessible" required multiple>
+                                            @foreach($tax_ids as $val)
+                                                <option value="{{ $val->id }}"  {{ in_array($val->id, explode(',',$taxrates->tax_ids)) ? 'selected' : '' }} >{{ $val->tax_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

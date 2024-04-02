@@ -15,11 +15,8 @@ class AjaxAPIController extends Controller
 
     public function getProductDetails(Request $request)
     {
-
-        // Get the product ID from the request
         $productId = $request->input('id');
 
-        // Fetch the product from the database
         $product = Product::select("name",
                                 "type",
                                 "unit",
@@ -34,14 +31,29 @@ class AjaxAPIController extends Controller
                                 "inter_tax_rate_id"
                             )
                             ->find($productId);
-
-        // Check if the product exists
         if ($product) {
-            // Return the rate of the product as a JSON response
             return response()->json($product->toArray());
         } else {
-            // Return an error response if the product does not exist
             return response()->json(['error' => 'Product not found'], 404);
+        }
+    }
+
+
+    public function getCustomerDetails(Request $request)
+    {
+        $customerId = $request->input('id');
+
+        $customer = Customer::select("customer_name", "company_name",  "gst_treatment_id",'place_of_supply')
+                            ->find($customerId);
+        if ($customer) {
+
+            $customer->gstTreatmentName = $customer->gsttreatments->title ?? '';
+            unset($customer->gsttreatments);
+            // unset($customer->gst_treatment_id);
+
+            return response()->json($customer->toArray());
+        } else {
+            return response()->json(['error' => 'Customer data not found'], 404);
         }
     }
 
